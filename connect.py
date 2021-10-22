@@ -7,6 +7,7 @@ ROW_COUNT = 6
 COLUMN_COUNT = 7
 WIN_COUNT = 4
 
+
 def load_scoreboard():
   try:
     with open('scoreboard.json') as json_file:
@@ -15,6 +16,7 @@ def load_scoreboard():
     scoreboard = {}
 
   return scoreboard
+
 
 def update_scoreboard(scoreboard, winner):
   scoreboard[winner]["Won"] += 1
@@ -26,11 +28,11 @@ def update_scoreboard(scoreboard, winner):
     json.dump(scoreboard, file, ensure_ascii=False)
 
 
-
 def create_board():
   # Create a matrix of 0s, representing the board
   board = numpy.zeros((ROW_COUNT, COLUMN_COUNT))
   return board
+
 
 def input_player_name(player):
   try:
@@ -40,7 +42,8 @@ def input_player_name(player):
     name = input(f"Player {player}, please enter your name: ")
 
   return name
-  
+
+
 def process_player_name(player):
   name = input_player_name(player)
 
@@ -55,10 +58,12 @@ def process_player_name(player):
 
   return name
 
+
 def print_score(player):
   won = scoreboard[player]["Won"]
   played = scoreboard[player]["Played"]
   print(f"{player}, you've won {won} out of {played} games!")
+
 
 def pretty_cell(value):
   if value == 1:
@@ -67,6 +72,7 @@ def pretty_cell(value):
     return "X|"
   else:
     return "_|"
+
 
 def print_board(board):
   pretty_board = "\n"
@@ -83,10 +89,12 @@ def print_board(board):
 
   print(pretty_board)
 
+
 def is_valid_location(board, col):
   # Check the top row of a column is empty
   return board[ROW_COUNT - 1][col] == 0
-  
+
+
 def player_move(board, player):
   selection = input(f"{player} Make your selection (0-{COLUMN_COUNT - 1}): ")
 
@@ -109,15 +117,18 @@ def player_move(board, player):
 
   return selection
 
+
 def get_next_open_row(board, col):
   # Check each row of a column, returning the first empty location
   for row in range(ROW_COUNT):
     if board[row][col] == 0:
       return row
 
+
 def drop_piece(board, row, col, piece):
   # Change the relevant board location, from '0' to '1'/'2'
   board[row][col] = piece
+
 
 def winning_move(board, piece):
   # Check horizontal locations for win
@@ -168,7 +179,8 @@ def winning_move(board, piece):
             continue
         else:
           break
-  
+
+
 def play_game(player1, player2):
   board = create_board()
   game_over = False
@@ -194,7 +206,6 @@ def play_game(player1, player2):
           game_over = True
           update_scoreboard(scoreboard, player1)
 
-
     # Player 2
     else:
       col = col = player_move(board, player2)
@@ -215,6 +226,7 @@ def play_game(player1, player2):
 
   if input("Would you like to play again? (y/n)") == "y":
     play_game(player1, player2)
+
 
 print("Welcome to Connect 4!")
 scoreboard = load_scoreboard()
