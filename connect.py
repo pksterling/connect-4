@@ -18,6 +18,15 @@ def load_scoreboard():
   return scoreboard
 
 
+def print_scoreboard(scoreboard):
+  print("Player scores:")
+  for player in scoreboard:
+    print(
+        f"----\n{player}:\nWins: {scoreboard[player]['Won']} out of {scoreboard[player]['Played']}"
+    )
+  print("----\n")
+
+
 def update_scoreboard(scoreboard, winner):
   scoreboard[winner]["Won"] += 1
   scoreboard[player1]["Played"] += 1
@@ -62,7 +71,7 @@ def process_player_name(player):
 def print_score(player):
   won = scoreboard[player]["Won"]
   played = scoreboard[player]["Played"]
-  print(f"{player}, you've won {won} out of {played} games!")
+  print(f"{player}, you've won {won} out of {played}, in previous games!")
 
 
 def pretty_cell(value):
@@ -228,9 +237,10 @@ def play_game(player1, player2):
     play_game(player1, player2)
 
 
-print("Welcome to Connect 4!")
+print("\nWelcome to Connect 4!\n")
 scoreboard = load_scoreboard()
+print_scoreboard(scoreboard)
 player1 = process_player_name(1)
 player2 = process_player_name(2)
 play_game(player1, player2)
-print("Thanks for playing!")
+print("\nThanks for playing!\n")
